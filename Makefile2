@@ -1,0 +1,27 @@
+CFLAGS = -Wall -g 
+CC = gcc
+
+PORT_SERVER = 12324
+
+IP_SERVER = 127.0.0.1
+
+ID_CLIENT = 1
+
+all: server subscriber
+
+server: server.c LinkedList.c
+
+subscriber: subscriber.c LinkedList.c
+	${CC} ${CFLAGS} subscriber.c LinkedList.c -o subscriber -lm
+
+.PHONY: clean run_server run_subscriber
+
+run_server:
+	./server ${PORT_SERVER}
+
+run_subscriber:
+	./subscriber ${ID_CLIENT} ${IP_SERVER} ${PORT_SERVER}
+
+clean:
+	rm -f server subscriber
+
